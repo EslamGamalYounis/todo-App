@@ -15,12 +15,7 @@ const authenticationMiddleware = require('./middlewares/authentication');
 const port = 4000;
 
 app.use('/users',userRouter);
-app.use('/todos',authenticationMiddleware,todoRouter);
-
-
-
-
-
+app.use('/todos',todoRouter);
 
 
 app.listen(process.env.PORT||port,()=>{
