@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/UsersData', {useNewUrlParser: true, useUnifiedTopology: true}
+
+mongoose.connect(process.env.MONGO_DB ||'mongodb://localhost:27017/UsersData', {useNewUrlParser: true, useUnifiedTopology: true}
 ,(err)=>{
     if(err){
         console.log("failed to connect to mongo db");
@@ -7,4 +8,4 @@ mongoose.connect('mongodb://localhost:27017/UsersData', {useNewUrlParser: true, 
         process.exit(1)
     }
     console.log("connected tp database successfully");
-});
+}); 
