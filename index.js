@@ -23,6 +23,6 @@ app.use('/todos',authenticationMiddleware,todoRouter);
 
 
 
-app.listen(port,()=>{
+app.listen(process.env.PORT||port,()=>{
     console.info('server listen in port '+port);
 })
