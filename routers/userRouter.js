@@ -85,20 +85,37 @@ userRouter.get('/',(req,res,next)=>{
     })
 });
 
-userRouter.use(authenticationMiddleware);
+//userRouter.use(authenticationMiddleware);
+// (req,res,next)=>{
+//     try{
+//         const {authorization} =req.headers;
+//         const signedData=jwt.verify(authorization,'my-signing-secret')
+//         req.signedData = signedData;
+//         next();
+//     }
+//     catch(err){
+//         res.statusCode = 401;
+//         res.send({success:false, message:`Authentcation failed`})
+//         return handleError(err);
+//     }
 
 userRouter.get('/profile',async (req,res,next)=>{
-        const user =await User.findOne({_id:req.signedData.id},{password:0,__v:0})
+    try{
+        const {authorization} =req.headers;
+        const signedData=jwt.verify(authorization,'my-signing-secret')
+        //req.signedData = signedData;
+        const user =await User.findOne({_id:signedData.id},{password:0,__v:0})
         res.statusCode=200;
         res.send(user);
         next();
+    }    
 
-    // catch(err){
-    //     //authorize error 401
-    //     // res.statusCode = 401;
-    //     // res.send({success:false, message:`Authentcation failed`})
-    //     // return handleError(err);
-    // }
+    catch(err){
+        //authorize error 401
+        res.statusCode = 401;
+        res.send({success:false, message:`Authentcation failed`})
+        return handleError(err);
+    }
 });
 
 
