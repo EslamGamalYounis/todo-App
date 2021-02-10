@@ -12,12 +12,12 @@ require('./db-connection');
 const userRouter =require('./routers/userRouter');
 const todoRouter =require('./routers/todoRouter');
 const authenticationMiddleware = require('./middlewares/authentication');
-const port = 4000;
+const PORT = process.env.PORT || 3000;
 
 app.use('/users',userRouter);
 app.use('/todos',todoRouter);
 
 
-app.listen(process.env.PORT||port,()=>{
-    console.info('server listen in port '+port);
+app.listen(PORT,()=>{
+    console.info('server listen in port '+PORT);
 })
